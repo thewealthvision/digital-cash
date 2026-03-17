@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Cash — The Wealth Vision</title>
+<style>
+  :root {
+    --bg: #050505;
+    --bg2: #0a0a0a;
+    --bg3: #0f0f0f;
+    --silver: rgba(200,200,220,1);
+    --silver-mid: rgba(200,200,220,0.5);
+    --silver-dim: rgba(200,200,220,0.2);
+    --silver-ghost: rgba(200,200,220,0.07);
+    --white: #ffffff;
+    --text: rgba(255,255,255,0.85);
+    --text-dim: rgba(200,200,220,0.45);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Gill Sans', 'Optima', 'Trebuchet MS', 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(200,200,220,0.2); }
+  .section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 56px;
+    justify-content: center;
+  }
+  .section-label-line { flex: 1; max-width: 80px; height: 1px; background: var(--silver-dim); }
+  .section-label-text { font-size: 9px; font-weight: 700; letter-spacing: 6px; color: var(--silver-mid); text-transform: uppercase; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* NAV */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+padding: 20px 40px;
+display: flex; align-items: center; justify-content: space-between;
+background: rgba(5,5,5,0.9);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid rgba(200,200,220,0.06);
+}
+.nav-logo { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: 18px; letter-spacing: 4px; color: var(–white); }
+.nav-logo span { background: linear-gradient(180deg,#fff,#909098); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.nav-cta {
+padding: 10px 24px; background: var(–white); border: none;
+font-size: 10px; font-weight: 700; letter-spacing: 3px; color: #0a0a0a;
+text-transform: uppercase; cursor: pointer; text-decoration: none;
+transition: background 0.2s, transform 0.1s; display: inline-block;
+}
+.nav-cta:hover { background: #e8e8e8; transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+min-height: 100vh; display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+padding: 120px 24px 80px; position: relative; overflow: hidden; text-align: center;
+}
+.hero-bg {
+position: absolute; inset: 0;
+background: radial-gradient(ellipse at 50% 0%, rgba(200,200,220,0.07) 0%, transparent 60%),
+radial-gradient(ellipse at 20% 100%, rgba(200,200,220,0.03) 0%, transparent 50%), var(–bg);
+}
+.hero-grid {
+position: absolute; inset: 0;
+background-image: linear-gradient(rgba(200,200,220,0.018) 1px, transparent 1px),
+linear-gradient(90deg, rgba(200,200,220,0.018) 1px, transparent 1px);
+background-size: 60px 60px;
+mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+}
+.hero-top-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, rgba(200,200,220,0.5), transparent); }
+.hero-logo { position: relative; z-index: 1; margin-bottom: 40px; }
+.twv-circle {
+width: 80px; height: 80px; border-radius: 50%; background: var(–bg2);
+border: 1.5px solid rgba(200,200,220,0.3);
+display: flex; align-items: center; justify-content: center;
+margin: 0 auto 10px; box-shadow: 0 0 40px rgba(200,200,220,0.08); position: relative;
+}
+.twv-circle::before { content: ‘’; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid rgba(200,200,220,0.1); }
+.twv-letters { font-family: ‘Palatino’,‘Georgia’,serif; font-size: 22px; font-weight: 600; background: linear-gradient(180deg,#fff,#909098); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 2px; }
+.twv-name { font-size: 10px; font-weight: 300; letter-spacing: 5px; color: var(–silver-mid); text-transform: uppercase; }
+.hero-badge {
+position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px;
+padding: 7px 18px; border: 1px solid rgba(200,200,220,0.15); background: rgba(200,200,220,0.04); margin-bottom: 40px;
+}
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(200,200,220,0.6); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.badge-text { font-size: 9px; font-weight: 700; letter-spacing: 5px; color: var(–silver-mid); text-transform: uppercase; }
+.hero-title { position: relative; z-index: 1; margin-bottom: 6px; }
+.hero-title-1 { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: clamp(80px,15vw,160px); line-height: 0.88; letter-spacing: 10px; color: rgba(255,255,255,0.95); display: block; }
+.hero-title-2 { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: clamp(80px,15vw,160px); line-height: 0.88; letter-spacing: 10px; background: linear-gradient(180deg,#e8e8f0 0%,#a0a0b4 40%,#606070 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 30px; }
+.hero-sep { position: relative; z-index: 1; width: 160px; height: 2px; background: linear-gradient(to right,transparent,rgba(200,200,220,0.5),transparent); margin: 0 auto 30px; }
+.hero-subtitle { position: relative; z-index: 1; font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: clamp(16px,2.5vw,22px); color: var(–silver-mid); line-height: 1.75; margin-bottom: 56px; max-width: 600px; }
+.hero-stats { position: relative; z-index: 1; display: flex; gap: 0; margin-bottom: 52px; flex-wrap: wrap; justify-content: center; }
+.hero-stat { padding: 0 32px; border-right: 1px solid rgba(200,200,220,0.1); text-align: center; }
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: 42px; letter-spacing: 2px; color: rgba(255,255,255,0.9); display: block; line-height: 1; margin-bottom: 5px; }
+.hero-stat-label { font-size: 9px; font-weight: 400; letter-spacing: 4px; color: var(–text-dim); text-transform: uppercase; display: block; }
+.hero-cta-wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 12px; padding: 18px 44px; background: var(–white); font-size: 11px; font-weight: 700; letter-spacing: 4px; color: #0a0a0a; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+.btn-primary:hover { background: #f0f0f0; transform: translateY(-2px); box-shadow: 0 10px 40px rgba(200,200,220,0.15); }
+.cta-sub { font-size: 10px; letter-spacing: 3px; color: rgba(200,200,220,0.25); text-transform: uppercase; }
+.scroll-indicator { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; }
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom,rgba(200,200,220,0.3),transparent); animation: scrollLine 2s infinite; }
+@keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* PROBLÈME */
+.problem-section { background: var(–bg2); border-top: 1px solid rgba(200,200,220,0.06); border-bottom: 1px solid rgba(200,200,220,0.06); }
+.problem-title { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: clamp(22px,4vw,36px); font-weight: 300; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.6; margin-bottom: 56px; max-width: 700px; margin-left: auto; margin-right: auto; }
+.problem-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 16px; }
+.problem-card { padding: 28px; background: var(–bg3); border: 1px solid rgba(200,200,220,0.1); position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.problem-card:hover { border-color: rgba(200,200,220,0.2); transform: translateY(-3px); }
+.problem-card::before { content:’’; position:absolute; top:12px; left:12px; width:12px; height:12px; border-top:1px solid rgba(200,200,220,0.3); border-left:1px solid rgba(200,200,220,0.3); }
+.problem-card::after { content:’’; position:absolute; bottom:12px; right:12px; width:12px; height:12px; border-bottom:1px solid rgba(200,200,220,0.3); border-right:1px solid rgba(200,200,220,0.3); }
+.problem-emoji { font-size: 28px; margin-bottom: 16px; display: block; }
+.problem-text { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 17px; font-weight: 300; color: var(–silver-mid); line-height: 1.7; }
+
+/* SOLUTION */
+.solution-title { text-align: center; margin-bottom: 16px; }
+.solution-title-1 { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: clamp(50px,8vw,90px); letter-spacing: 8px; color: rgba(255,255,255,0.95); display: block; line-height: 1; }
+.solution-title-2 { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: clamp(50px,8vw,90px); letter-spacing: 8px; background: linear-gradient(180deg,#e8e8f0,#808090); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; line-height: 1; }
+.solution-desc { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 19px; font-weight: 300; color: var(–silver-mid); text-align: center; line-height: 1.75; max-width: 600px; margin: 24px auto 60px; }
+.options-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 20px; }
+.option-card { padding: 36px; background: var(–bg2); border: 1px solid rgba(200,200,220,0.15); position: relative; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; }
+.option-card:hover { border-color: rgba(200,200,220,0.3); box-shadow: 0 0 40px rgba(200,200,220,0.05); }
+.option-card::before { content:’’; position:absolute; top:12px; left:12px; width:14px; height:14px; border-top:1px solid rgba(200,200,220,0.4); border-left:1px solid rgba(200,200,220,0.4); }
+.option-card::after { content:’’; position:absolute; bottom:12px; right:12px; width:14px; height:14px; border-bottom:1px solid rgba(200,200,220,0.4); border-right:1px solid rgba(200,200,220,0.4); }
+.option-badge { display: inline-block; padding: 5px 12px; border: 1px solid rgba(200,200,220,0.15); font-size: 8px; font-weight: 700; letter-spacing: 4px; color: var(–silver-mid); text-transform: uppercase; margin-bottom: 20px; }
+.option-title { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: 28px; letter-spacing: 3px; color: var(–white); margin-bottom: 16px; line-height: 1.1; }
+.option-desc { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 15px; color: var(–text-dim); line-height: 1.75; margin-bottom: 20px; }
+.option-highlight { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: rgba(200,200,220,0.6); text-transform: uppercase; padding: 10px 16px; border: 1px solid rgba(200,200,220,0.12); background: rgba(200,200,220,0.03); display: inline-block; }
+
+/* MODULES */
+.modules-section { background: var(–bg2); border-top: 1px solid rgba(200,200,220,0.06); border-bottom: 1px solid rgba(200,200,220,0.06); }
+.modules-grid { display: flex; flex-direction: column; gap: 14px; }
+.module-card { padding: 28px 32px; background: var(–bg3); border: 1px solid rgba(200,200,220,0.1); display: flex; align-items: flex-start; gap: 28px; transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden; }
+.module-card:hover { border-color: rgba(200,200,220,0.22); transform: translateX(4px); }
+.module-card::before { content:’’; position:absolute; left:0; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,transparent,rgba(200,200,220,0.3),transparent); opacity:0; transition:opacity 0.3s; }
+.module-card:hover::before { opacity: 1; }
+.module-num { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: 48px; letter-spacing: 2px; color: rgba(200,200,220,0.12); line-height: 1; min-width: 60px; flex-shrink: 0; }
+.module-content { flex: 1; }
+.module-title { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: 22px; letter-spacing: 3px; color: rgba(255,255,255,0.85); margin-bottom: 8px; }
+.module-desc { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 14px; color: var(–text-dim); line-height: 1.7; }
+
+/* INCLUS */
+.includes-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 14px; }
+.include-item { display: flex; align-items: flex-start; gap: 16px; padding: 20px 24px; border: 1px solid rgba(200,200,220,0.08); background: var(–bg2); transition: border-color 0.3s; }
+.include-item:hover { border-color: rgba(200,200,220,0.18); }
+.include-check { width: 20px; height: 20px; border: 1px solid rgba(200,200,220,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.include-check-icon { font-size: 10px; color: rgba(200,200,220,0.7); }
+.include-text { font-size: 13px; font-weight: 500; letter-spacing: 1px; color: rgba(200,200,220,0.6); line-height: 1.6; }
+
+/* TÉMOIGNAGE */
+.testimonial-section { background: var(–bg2); border-top: 1px solid rgba(200,200,220,0.06); border-bottom: 1px solid rgba(200,200,220,0.06); }
+.testimonial-card { max-width: 700px; margin: 0 auto; padding: 48px; background: var(–bg3); border: 1px solid rgba(200,200,220,0.15); position: relative; text-align: center; }
+.testimonial-card::before { content:’’; position:absolute; top:14px; left:14px; width:16px; height:16px; border-top:1px solid rgba(200,200,220,0.4); border-left:1px solid rgba(200,200,220,0.4); }
+.testimonial-card::after { content:’’; position:absolute; bottom:14px; right:14px; width:16px; height:16px; border-bottom:1px solid rgba(200,200,220,0.4); border-right:1px solid rgba(200,200,220,0.4); }
+.testimonial-quote-mark { font-family: ‘Palatino’,‘Georgia’,serif; font-size: 80px; color: rgba(200,200,220,0.06); line-height: 0.7; margin-bottom: 24px; display: block; }
+.testimonial-text { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 20px; font-weight: 300; color: rgba(200,200,220,0.6); line-height: 1.8; margin-bottom: 32px; }
+.testimonial-sep { width: 60px; height: 1px; background: linear-gradient(to right,transparent,rgba(200,200,220,0.3),transparent); margin: 0 auto 24px; }
+.testimonial-author { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.testimonial-avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(200,200,220,0.1); border: 1px solid rgba(200,200,220,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(200,200,220,0.5); font-weight: 600; }
+.testimonial-name { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: rgba(200,200,220,0.4); text-transform: uppercase; }
+.testimonial-stars { font-size: 13px; letter-spacing: 3px; color: rgba(200,200,220,0.4); margin-left: auto; }
+
+/* CONFIANCE */
+.trust-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 14px; }
+.trust-card { padding: 28px 24px; border: 1px solid rgba(200,200,220,0.08); background: var(–bg2); text-align: center; transition: border-color 0.3s, transform 0.3s; }
+.trust-card:hover { border-color: rgba(200,200,220,0.18); transform: translateY(-3px); }
+.trust-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.trust-title { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: rgba(200,200,220,0.6); text-transform: uppercase; margin-bottom: 8px; }
+.trust-desc { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 13px; color: var(–text-dim); line-height: 1.6; }
+
+/* CTA FINAL */
+.cta-section { text-align: center; padding: 120px 24px; position: relative; overflow: hidden; background: #141210; }
+.cta-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%,rgba(220,215,200,0.12) 0%,transparent 65%); }
+.cta-ornament { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 40px; }
+.cta-orn-line { width: 60px; height: 1px; background: rgba(200,200,220,0.2); }
+.cta-orn-diamond { width: 6px; height: 6px; background: rgba(200,200,220,0.3); transform: rotate(45deg); }
+.cta-orn-text { font-size: 10px; color: rgba(200,200,220,0.8); letter-spacing: 6px; text-transform: uppercase; }
+.cta-title { position: relative; z-index: 1; font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: clamp(28px,4vw,44px); font-weight: 600; color: #ffffff; line-height: 1.5; margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.cta-price-wrap { position: relative; z-index: 1; margin-bottom: 32px; }
+.cta-price-label { font-size: 9px; font-weight: 600; letter-spacing: 6px; color: rgba(255,255,255,0.95); text-transform: uppercase; display: block; margin-bottom: 8px; }
+.cta-price { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: clamp(70px,12vw,120px); letter-spacing: 6px; color: rgba(255,255,255,0.95); display: block; line-height: 1; }
+.cta-btn-wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.btn-cta-final { display: inline-flex; align-items: center; gap: 14px; padding: 20px 52px; background: var(–white); font-size: 12px; font-weight: 700; letter-spacing: 4px; color: #050505; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+.btn-cta-final:hover { background: #ececec; transform: translateY(-3px); box-shadow: 0 20px 60px rgba(200,200,220,0.15); }
+.cta-guarantee { font-size: 10px; font-weight: 600; letter-spacing: 3px; color: rgba(255,255,255,0.8); text-transform: uppercase; }
+
+/* FOOTER */
+footer { padding: 40px 24px; border-top: 1px solid rgba(200,200,220,0.06); display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.footer-logo { font-family: ‘Impact’,‘Arial Narrow’,‘Arial Black’,sans-serif; font-size: 16px; letter-spacing: 4px; color: rgba(255,255,255,0.85); }
+.footer-sep { width: 40px; height: 1px; background: rgba(200,200,220,0.1); }
+.footer-text { font-family: ‘Palatino’,‘Georgia’,serif; font-style: italic; font-size: 12px; color: rgba(200,200,220,0.8); letter-spacing: 2px; line-height: 1.8; }
+
+@media (max-width: 768px) {
+nav { padding: 16px 20px; }
+.hero-stat { padding: 0 16px; }
+.module-card { flex-direction: column; gap: 12px; }
+.testimonial-card { padding: 32px 24px; }
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">THE <span>WEALTH VISION</span></div>
+  <a href="#cta" class="nav-cta">Obtenir Digital Cash</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-top-line"></div>
+  <div class="hero-logo reveal">
+    <div class="twv-circle"><span class="twv-letters">TWV</span></div>
+    <div class="twv-name">The Wealth Vision</div>
+  </div>
+  <div class="hero-badge reveal">
+    <div class="badge-dot"></div>
+    <span class="badge-text">Guide Premium · Édition 2025</span>
+  </div>
+  <div class="hero-title reveal">
+    <span class="hero-title-1">DIGITAL</span>
+    <span class="hero-title-2">CASH</span>
+  </div>
+  <div class="hero-sep reveal"></div>
+  <p class="hero-subtitle reveal">Le guide complet pour créer et vendre<br>ta première formation digitale,<br>même en partant de zéro.</p>
+  <div class="hero-stats reveal">
+    <div class="hero-stat"><span class="hero-stat-num">50</span><span class="hero-stat-label">Pages</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">05</span><span class="hero-stat-label">Modules</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">∞</span><span class="hero-stat-label">Accès vie</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">Revente</span></div>
+  </div>
+  <div class="hero-cta-wrap reveal">
+    <a href="#cta" class="btn-primary">Obtenir maintenant — 27€ &nbsp;→</a>
+    <span class="cta-sub">Livraison instantanée · Droits de revente inclus</span>
+  </div>
+  <div class="scroll-indicator"><div class="scroll-line"></div></div>
+</section>
+
+<section class="problem-section">
+  <div class="section">
+    <div class="section-label reveal"><div class="section-label-line"></div><span class="section-label-text">Le problème</span><div class="section-label-line"></div></div>
+    <p class="problem-title reveal">Tu veux gagner de l'argent en ligne<br>mais tu sais pas par où commencer ?</p>
+    <div class="problem-grid">
+      <div class="problem-card reveal"><span class="problem-emoji">😩</span><p class="problem-text">Tu cherches une méthode concrète depuis des mois sans jamais trouver quelque chose qui marche vraiment.</p></div>
+      <div class="problem-card reveal"><span class="problem-emoji">😕</span><p class="problem-text">Tu ne sais pas quoi vendre ni comment te lancer sans expérience ni budget de départ.</p></div>
+      <div class="problem-card reveal"><span class="problem-emoji">😰</span><p class="problem-text">Tu as peur de te lancer, de perdre du temps et de ne jamais voir le moindre résultat concret.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section">
+    <div class="section-label reveal"><div class="section-label-line"></div><span class="section-label-text">La solution</span><div class="section-label-line"></div></div>
+    <div class="solution-title reveal"><span class="solution-title-1">DIGITAL</span><span class="solution-title-2">CASH</span></div>
+    <p class="solution-desc reveal">La méthode concrète pour créer et vendre ta première formation digitale — même en partant de zéro. Pas de théorie, pas de blabla. Que des étapes concrètes.</p>
+    <div class="options-grid">
+      <div class="option-card reveal">
+        <div class="option-badge">💥 Option 01</div>
+        <div class="option-title">Revendre une formation prête à l'emploi</div>
+        <p class="option-desc">Tu démarres immédiatement avec une formation clé en main. Tu encaisses 100% des ventes — sans commission ni frais cachés.</p>
+        <span class="option-highlight">👉 La méthode la plus rapide pour tes premiers revenus</span>
+      </div>
+      <div class="option-card reveal">
+        <div class="option-badge">💥 Option 02</div>
+        <div class="option-title">Créer ton propre produit digital</div>
+        <p class="option-desc">Tu crées ton produit basé sur ta passion ou ton expertise. Tu réutilises les mêmes stratégies et tu contrôles tout.</p>
+        <span class="option-highlight">✅ Tu deviens propriétaire total de ton business</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="modules-section">
+  <div class="section">
+    <div class="section-label reveal"><div class="section-label-line"></div><span class="section-label-text">Ce que tu vas apprendre</span><div class="section-label-line"></div></div>
+    <div class="modules-grid">
+      <div class="module-card reveal"><div class="module-num">01</div><div class="module-content"><div class="module-title">Trouver son idée de formation</div><p class="module-desc">Comment identifier ce que tu peux vendre, valider ton idée avant de créer et éviter les erreurs que font 90% des débutants.</p></div></div>
+      <div class="module-card reveal"><div class="module-num">02</div><div class="module-content"><div class="module-title">Créer sa formation sur Canva</div><p class="module-desc">Créer un PDF professionnel et attractif sans être graphiste, structurer son contenu et soigner le design pour être perçu comme premium.</p></div></div>
+      <div class="module-card reveal"><div class="module-num">03</div><div class="module-content"><div class="module-title">Mettre en vente</div><p class="module-desc">Créer sa boutique, connecter PayPal, fixer le bon prix et rédiger une page produit qui convertit — sans budget publicitaire.</p></div></div>
+      <div class="module-card reveal"><div class="module-num">04</div><div class="module-content"><div class="module-title">Attirer des clients grâce à TikTok</div><p class="module-desc">Créer son compte TikTok, quelle stratégie adopter, quelles vidéos faire et comment transformer des vues en ventes sans montrer son visage.</p></div></div>
+      <div class="module-card reveal"><div class="module-num">05</div><div class="module-content"><div class="module-title">Maximiser ses ventes</div><p class="module-desc">Codes promo, fidélisation clients, créer plusieurs formations et automatiser ses ventes pour générer du revenu passif sur le long terme.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section">
+    <div class="section-label reveal"><div class="section-label-line"></div><span class="section-label-text">Tout ce qui est inclus</span><div class="section-label-line"></div></div>
+    <div class="includes-grid">
+      <div class="include-item reveal"><div class="include-check"><span class="include-check-icon">✓</span></div><span class="include-text">50 pages de contenu complet et structuré</span></div>
+      <div class="include-item reveal"><div class="include-check"><span class="include-check-icon">✓</span></div><span class="include-text">5 modules étape par étape</span></div>
+      <div class="include-item reveal"><div class="include-check"><span class="include-check-icon">✓</span></div><span class="include-text">Droits de revente 100% inclus — tu revends et gardes tout</span></div>
+      <div class="include-item reveal"><div class="include-check"><span class="include-check-icon">✓</span></div><span class="include-text">Accès à vie + toutes les mises à jour futures incluses</span></div>
+      <div class="include-item reveal"><div class="include-check"><span class="include-check-icon">✓</span></div><span class="include-text">Accès à la communauté privée Digital Cash Community</span></div>
+      <div class="include-item reveal"><div class="include-check"><span class="include-check-icon">✓</span></div><span class="include-text">Stratégies TikTok prêtes à l'emploi pour tes premiers clients</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial-section">
+  <div class="section">
+    <div class="section-label reveal"><div class="section-label-line"></div><span class="section-label-text">Ce qu'ils en pensent</span><div class="section-label-line"></div></div>
+    <div class="testimonial-card reveal">
+      <span class="testimonial-quote-mark">"</span>
+      <p class="testimonial-text">J'ai suivi Digital Cash et j'ai vendu mon premier produit digital en moins d'une semaine. Le contenu est clair, concret et vraiment complet. Je recommande à 100%.</p>
+      <div class="testimonial-sep"></div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">S</div>
+        <span class="testimonial-name">Sarah M.</span>
+        <span class="testimonial-stars">★★★★★</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section">
+    <div class="section-label reveal"><div class="section-label-line"></div><span class="section-label-text">Pourquoi nous choisir</span><div class="section-label-line"></div></div>
+    <div class="trust-grid">
+      <div class="trust-card reveal"><span class="trust-icon">⚡</span><div class="trust-title">Livraison instantanée</div><p class="trust-desc">Accès immédiat à ta formation après paiement</p></div>
+      <div class="trust-card reveal"><span class="trust-icon">🔒</span><div class="trust-title">Paiement sécurisé</div><p class="trust-desc">Via PayPal — protection acheteur incluse</p></div>
+      <div class="trust-card reveal"><span class="trust-icon">♾️</span><div class="trust-title">Accès à vie</div><p class="trust-desc">Toutes les mises à jour futures offertes</p></div>
+      <div class="trust-card reveal"><span class="trust-icon">💎</span><div class="trust-title">Qualité premium</div><p class="trust-desc">Contenu testé, approuvé et actionnable</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-ornament reveal">
+    <div class="cta-orn-line"></div>
+    <div class="cta-orn-diamond"></div>
+    <span class="cta-orn-text">✦ &nbsp; ✦ &nbsp; ✦</span>
+    <div class="cta-orn-diamond"></div>
+    <div class="cta-orn-line"></div>
+  </div>
+  <h2 class="cta-title reveal">À toi de choisir :<br>rester spectateur ou devenir acteur.</h2>
+  <div class="cta-price-wrap reveal">
+    <span class="cta-price-label">Accès complet pour seulement</span>
+    <span class="cta-price">27€</span>
+  </div>
+  <div class="cta-btn-wrap reveal">
+    <a href="LIEN_BEACONS_ICI" class="btn-cta-final">Obtenir Digital Cash maintenant &nbsp;→</a>
+    <span class="cta-guarantee">Paiement sécurisé · Livraison instantanée · Droits de revente inclus</span>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">THE WEALTH VISION</div>
+  <div class="footer-sep"></div>
+  <p class="footer-text">Digital Cash Community · 2025<br>Toutes les formations sont livrées instantanément après paiement<br>© 2025 The Wealth Vision — Tous droits réservés</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), index * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+  document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 200 + i * 150);
+  });
+</script>
+
+</body>
+</html>
